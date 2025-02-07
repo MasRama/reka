@@ -1,5 +1,5 @@
 import { MessageHandler, TextMessageContext } from '../../types';
-import { WizardService } from '../../../services/wizard.service';
+import { WizardService } from '../../../services/wizard';
 import * as haloWizard from './wizards/halo-wizard';
 
 // Export the type of message this handler manages

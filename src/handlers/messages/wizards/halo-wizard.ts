@@ -1,5 +1,5 @@
 import { TextMessageContext } from '../../../types';
-import { WizardService, WizardSession } from '../../../../services/wizard.service';
+import { WizardService, WizardSession } from '../../../../services/wizard';
 
 // Handle steps for halo wizard
 export const handler = async (ctx: TextMessageContext, session: WizardSession) => {

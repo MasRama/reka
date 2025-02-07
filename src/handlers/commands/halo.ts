@@ -1,5 +1,5 @@
 import { CommandHandler } from '../../types';
-import { WizardService } from '../../../services/wizard.service';
+import { WizardService } from '../../../services/wizard';
 
 export const haloCommand: CommandHandler = async (ctx) => {
   try {
