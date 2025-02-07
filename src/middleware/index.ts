@@ -1,4 +1,4 @@
-import { Telegraf } from 'telegraf';
+import { Telegraf, session } from 'telegraf';
 import { BotContext } from '../types';
 
 export const setupMiddleware = (bot: Telegraf<BotContext>) => {
@@ -10,8 +10,15 @@ export const setupMiddleware = (bot: Telegraf<BotContext>) => {
     console.log('Response time: %sms', ms);
   });
 
-  // Add session middleware if needed
-  // bot.use(session());
+  // Enable session middleware for wizard functionality
+  bot.use(session({
+    defaultSession: () => ({
+      wizard: {
+        step: 0,
+        data: {}
+      }
+    })
+  }));
 
   // Add rate limiting middleware
   bot.use(async (ctx, next) => {

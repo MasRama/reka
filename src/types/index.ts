@@ -3,9 +3,13 @@ import { Message, Update } from 'telegraf/types';
 
 // Extend the context type to add custom properties
 export interface BotContext extends Context {
-  // Add custom session properties here
   session?: {
-    // Example: userData?: any;
+    wizard?: {
+      step: number;
+      data: {
+        name?: string;
+      };
+    };
   };
 }
 

@@ -3,12 +3,11 @@ import { BotContext } from '../types';
 import * as fs from 'fs';
 import * as path from 'path';
 
-
-
 export const commandHandler = async (bot: Telegraf<BotContext>) => {
   console.log('Loading commands...');
   
   const commandsPath = path.join(__dirname, 'commands');
+  const commands = new Set<string>();
   
   // Read all files in the commands directory
   const commandFiles = fs.readdirSync(commandsPath)
@@ -29,7 +28,7 @@ export const commandHandler = async (bot: Telegraf<BotContext>) => {
         
         if (command) {
           bot.command(commandName, command);
-          console.log(`✅ Loaded command: /${commandName}`);
+          commands.add(commandName);
         } else {
           console.warn(`⚠️ Command not found in module: /${commandName}`);
         }
@@ -39,5 +38,8 @@ export const commandHandler = async (bot: Telegraf<BotContext>) => {
     })
   );
   
-  console.log('All commands loaded!');
+  // Log all loaded commands in one line
+  if (commands.size > 0) {
+    console.log(`✅ Loaded ${commands.size} commands: /${Array.from(commands).join(', /')}`);
+  }
 }; 

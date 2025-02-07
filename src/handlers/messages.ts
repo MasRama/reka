@@ -7,6 +7,7 @@ export const messageHandler = async (bot: Telegraf<BotContext>) => {
   console.log('Loading message handlers...');
   
   const handlersPath = path.join(__dirname, 'messages');
+  const handlers = new Map<string, number>();
   
   // Read all files in the messages directory
   const handlerFiles = fs.readdirSync(handlersPath)
@@ -26,7 +27,7 @@ export const messageHandler = async (bot: Telegraf<BotContext>) => {
         
         if (module.handler && module.type) {
           bot.on(module.type, module.handler);
-          console.log(`✅ Loaded message handler: ${module.type}`);
+          handlers.set(module.type, (handlers.get(module.type) || 0) + 1);
         } else {
           console.warn(`⚠️ Invalid handler module: ${handlerName}`);
         }
@@ -35,6 +36,9 @@ export const messageHandler = async (bot: Telegraf<BotContext>) => {
       }
     })
   );
-  
-  console.log('All message handlers loaded!');
+
+  // Log loaded handlers by type
+  handlers.forEach((count, type) => {
+    console.log(`✅ Loaded ${count} handler${count > 1 ? 's' : ''} for: ${type}`);
+  });
 }; 
